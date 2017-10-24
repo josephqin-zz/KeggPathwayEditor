@@ -1,0 +1,22 @@
+
+<div class="form-inline form-group">
+     
+	<select class="form-control" ng-model="yName">
+     <option value="" disabled selected>yAxis</option>
+     <option ng-repeat="opt in selectOptions">{{ opt }}</option>
+     </select>
+     <select class="form-control" ng-model="sMethod">
+     <option value="" disabled selected>Algorithm</option>
+     <option ng-repeat="med in statisticsMethods">{{ med }}</option>
+     </select>
+</div>
+
+<div class="form-group">
+     <label class="checkbox-inline">
+       <input type="checkbox" ng-model="withoutBlank">Without Blank Data
+     </label>
+</div>
+
+<nest-selection select-options='selectOptions' select-name='Groups by' select-model='selectResult'></nest-selection>
+
+

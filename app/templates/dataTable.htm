@@ -1,0 +1,13 @@
+
+<table class="table table-bordered">
+  <thead>
+     <tr>
+     	<td ng-repeat = "x in columns">{{ x }}</td>
+     </tr>
+  </thead>
+  <tbody>
+  	<tr ng-repeat = "item in tableData track by $index">
+  		<td ng-repeat= "x in columns">{{ item[x] }}</td>
+  	</tr>
+  </tbody>
+</table>

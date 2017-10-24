@@ -1,0 +1,40 @@
+<div class="demo-dialog-example" style="width:300px" draggable>
+  <div>
+    <md-toolbar>
+    <div class="md-toolbar-tools" >
+    <h2>Data Setting</h2>
+    <span flex class="flex"></span>
+    <button type="button" class="btn btn-warning btn-circle"  ng-click="dmctrl.closeDialog()">
+          <span class="glyphicon glyphicon-remove"></span>
+    </button>
+    </div>
+    </md-toolbar>
+    
+  <div style="padding: 20px 20px 20px 10px;">
+        <div calss='form-inline form-group'>
+          <label>Select Pathway Data Column</label>
+          <select class="form-control" ng-model="mlabelcol" >
+          <option ng-value="opt" ng-repeat="opt in dmctrl.mlabelOpts">{{ opt }}</option>
+          </select>
+        </div>
+        <div calss='form-inline form-group'>
+          <label>Select Experiment Data Column</label>
+          <select class="form-control" ng-model="elabelcol" >
+          <option ng-value="opt" ng-repeat="opt in dmctrl.elabelOpts">{{ opt }}</option>
+          </select>
+        </div>
+  </div>
+  
+  <div calss="center-block" style="padding: 20px 20px 20px 10px;">
+    <button class="btn btn-primary center-block" ng-click="dmctrl.matchdata()">
+      Match
+    </utton>
+  </div>
+  
+
+  </div>
+
+  
+
+  
+</div>

@@ -1,0 +1,178 @@
+<html lang="en" >
+<head>
+    <title>Web Spotfire</title>
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic"> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://d3js.org/d3.v3.min.js"></script>
+	<script src='../js/cytoscape.min.js'></script>
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+	  
+
+	<!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js"></script>
+	<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js"></script> -->
+    <!-- Angular Material Library -->
+    <!-- <script src="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.3/angular-material.js"></script> -->
+	<!-- Angular Material style sheet -->
+	<script type="text/javascript" src="../js/ms_common.js"></script>
+	<script type="text/javascript" src="../js/ms_util.js"></script>
+	<script type="text/javascript" src="../js/simple-statistics.min.js"></script>
+	<script type="text/javascript" src="../js/stat_common.js"></script>
+	<script type="text/javascript" src="../js/svg_todataurl.js"></script>
+	
+	<!-- <script src="../multilines_v3.js"></script> -->
+	<script src="app/scripts/pathwayCy.js"></script>
+	<script src="app/scripts/miniChart.js"></script>
+	<script src="app/scripts/utility.js"></script>
+	<script src="app/app.js"></script>
+	<script src="app/controllers/spotfire.js"></script>
+	<script src="app/directives/FileUpload.js"></script>
+	<script src="app/directives/Draggable.js"></script>
+	<script src="app/directives/Sortable.js"></script>
+	<script src="app/directives/ChartCanvas.js"></script>
+	<script src="app/directives/NestSelection.js"></script>
+	<script src="app/directives/HierarchySelect.js"></script>
+	<script src="app/directives/dataTable.js"></script>
+	
+	
+	<style>
+
+	.loader {
+	  height: 4px;
+	  width: 100%;
+	  position: relative;
+	  overflow: hidden;
+	  background-color: #ddd;
+	}
+	.loader:before{
+	  display: block;
+	  position: absolute;
+	  content: "";
+	  left: -200px;
+	  width: 200px;
+	  height: 4px;
+	  background-color: #2980b9;
+	  animation: loading 2s linear infinite;
+	}
+
+	@keyframes loading {
+    from {left: -200px; width: 30%;}
+    50% {width: 30%;}
+    70% {width: 70%;}
+    80% { left: 50%;}
+    95% {left: 120%;}
+    to {left: 100%;}
+	}
+
+    .circle {
+		display:inline-block;
+		margin:5 10 -5 0;
+		  width: 20px;
+		  height: 20px;
+		  background: red;
+		  -moz-border-radius: 10px;
+		  -webkit-border-radius: 10px;
+		  border-radius: 10px;
+		}
+    .legend {
+    	display:inline-block;
+    	margin: 0px 0px 0px 0px;
+    }
+    
+    .affix {
+		      top: 10px;
+		}
+
+	::-webkit-scrollbar {
+		display: none;
+	}		
+
+	</style>
+</head>
+<body > 
+    
+	<div class="container-fluid" ng-app="MyApp" ng-controller="testCtrl" >
+     
+		<div class="row">
+			
+			<div class="col-md-8">
+			    <div class="row">
+				    <div class="col-md-5" ng-repeat = 'item in trellisData'>
+				        <div name="{{ item.key.split('*').join(',') }}" sortable>
+				    	<h5>{{ item.key.split('*').join(',') }}</h5>
+				    	<chart-canvas chart-data="item.values" chart-setting="chartSetting" ></chart-canvas>
+				    	</div>
+				    </div>
+			    </div>
+			</div>
+			<div class="col-md-4" >
+
+				
+			    <div class="row col-md-4" data-spy="affix" style="overflow-y:scroll; height:700px">
+
+			        <div ng-show="datasetShow">
+					<ul >
+					<li ng-repeat="dataset in menuData" ng-click="expand(dataset)">{{ dataset.key }}
+						<ul>
+						<li ng-repeat="ss in dataset.values"  ng-click="$event.stopPropagation()" ng-show="dataset.show">
+						<input type='radio' ng-model="$parent.$parent.datasetName" ng-value="ss">{{ ss.dataset_name }}
+						</li>
+						<ul>
+					</li>
+					</ul>
+					
+				    </div>
+
+			    	<div class="form-inline">			 
+					<!-- <file-upload file-type="tsv" file-data="testFile" file-name="testname" file-complete="uploadend"></file-upload> -->
+					<button ng-show='datasetShow' ng-click="uploadFile()" class="btn btn-primary" >Update</button>
+					<div ng-hide='loadDone' class="loader"></div>
+					<button ng-show='loadDone' ng-click="drawChart()" class="btn btn-primary" >Draw</button>
+					
+				</div>
+				<div class="form-inline">
+					<label ng-repeat="item in chatTypeList">
+						<input type='radio' name='charttype' ng-model="chartSetting.type" value='{{ item }}'>
+						{{ item }} chart 
+						<br/>
+					</label>
+				</div>
+				<nest-selection  select-options='columns' select-name='Trellis by' select-model='trellis'/>
+					
+				</nest-selection>
+				<label>Choose Y axis Value</label>
+				<hierarchy-select  select-options="columns" select-result="hierarchies" y-name="yaxis" s-method="smethod" without-blank="noBlank"></hierarchy-select>
+                
+                <div class="form-group" ng-hide="showLog">
+				     <label class="checkbox-inline">
+				       <input type="checkbox" ng-model="chartSetting.logON">Log
+				     </label>
+				</div>
+
+
+				<div>
+					<div ng-repeat = '(key,value) in chartSetting.colormap'>
+					    
+					    <i class="circle" style="background:{{ value }}"></i><p class='legend' >{{ key }}</p>
+					    
+					</div>
+				</div>
+				</div>
+			    </div>
+			    
+			</div>
+		</div>
+		<!-- <div class="row">
+			<my-table table-data='testFile'></my-table>
+		</div> -->
+	</div>
+
+
+</body>	

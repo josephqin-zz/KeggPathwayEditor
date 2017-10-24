@@ -1,0 +1,18 @@
+<div class="form-group">
+    <label>Group Editor</label>
+    <div class="form-inline">
+	<input type='text' ng-model="gname" class="form-control" ></input>
+    <button  ng-click="addGroup()" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></button>
+	<button  ng-click="resetGroup()" class="btn btn-warning"><span class="glyphicon glyphicon-refresh"></span></button>
+	</div>
+</div>
+
+<div class="form-group" ng-hide="!groupList.length">
+	<h5 >Group By</h5>
+	<div class="form-inline" ng-repeat="x in groupList">
+	    <div class='groupbox' id="{{ $index }}" ng-style="{ 'background-color': x.gcolor }" ng-click="addRow2Group($index)">
+		<label>Group {{ $index+1 }} <span style="color:blue"> {{ x.name }} </span> <span style="color:white"> {{ x.rowlist.length }} Samples </span> </label>
+		<button type="button" class="btn btn-danger btn-xs" ng-click="deleteGroup($index)"><span class="glyphicon glyphicon-minus"></span></button>
+		</div>
+	<div>
+</div>

@@ -1,0 +1,20 @@
+<div role="dialog" aria-label="Eat me!" layout="column" layout-align="center center">
+  <md-toolbar>
+    <div class="md-toolbar-tools" >
+      <h2>{{ Pctrl.titlename }}</h2>
+    </div></md-toolbar>
+
+  <div class="demo-dialog-content">
+
+    <input id="input-file-id" type="file" />
+    
+    <p ng-hide="!fileName">{{ fileName }}</p>
+  
+  </div>
+
+  <div layout="row" class="demo-dialog-button">
+    <md-button class="md-primary" ng-click="Pctrl.upload()">
+      upload
+    </md-button>
+  </div>
+</div>

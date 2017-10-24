@@ -1,0 +1,30 @@
+<div class="demo-dialog-example" style="width:300px" draggable>
+  <div >
+    <md-toolbar>
+    <div class="md-toolbar-tools" >
+    <h2>Pathway Setting</h2>
+    <span flex class="flex"></span>
+    <button type="button" class="btn btn-warning btn-circle"  ng-click="ppctrl.closeDialog()">
+          <span class="glyphicon glyphicon-remove"></span>
+    </button>
+    </div>
+    </md-toolbar>
+  <div style="padding: 20px 20px 20px 10px;">
+        <label>Select a Label</label>
+        <select class="form-control" ng-model="labelcol" >
+        <option ng-value="opt" ng-repeat="opt in ppctrl.labelOpts">{{ opt }}</option>
+  </select>
+  </div>
+  <div style="padding: 20px 20px 20px 10px;">
+        <label>Change Font Size</label>
+        <input ng-model="fontScale" type="range" id="fontsizeSlider" name="points" value = 1 step=0.1 min="1" max="2"></input>
+  </div>
+  
+  
+
+  </div>
+
+  
+
+  
+</div>

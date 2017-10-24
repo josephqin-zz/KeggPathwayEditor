@@ -1,0 +1,74 @@
+<div class="demo-dialog-example" style="width:320px" draggable>
+  <div>
+    <md-toolbar>
+    <div class="md-toolbar-tools" >
+    <h2>Add Chart...</h2>
+    <span flex class="flex"></span>
+    <button type="button" class="btn btn-warning btn-circle"  ng-click="adctrl.closeDialog()">
+          <span class="glyphicon glyphicon-remove"></span>
+    </button>
+    </div>
+    </md-toolbar>
+    </div>
+  <div style="padding: 10px 20px 20px 10px;">
+        <label>Chart Type</label>
+        <div class="form-group">
+            <label ng-repeat="item in adctrl.chatTypeList">
+            <input type='radio' name='charttype' ng-model="adctrl.charttype" value='{{ item }}'>
+            {{ item }} chart 
+            <br/>
+            </label>
+            
+        </div >
+        
+        <!-- <label>Select Y aixs</label>
+        <select class="form-control" ng-model="adctrl.yName" >
+        <option value="{{ opt }}" ng-repeat="opt in adctrl.labelOpts">{{ opt }}</option>
+        </select>
+        <label>Select X aixs</label>
+        <select class="form-control" ng-model="adctrl.xName" >
+        <option value="{{ opt }}" ng-repeat="opt in adctrl.labelOpts">{{ opt }}</option>
+        </select>
+        <label>Select Group Field</label>
+        <select class="form-control" ng-model="adctrl.field" >
+        <option value="{{ opt }}" ng-repeat="opt in adctrl.labelOpts">{{ opt }}</option>
+        </select> -->
+        <label>Chart Data</label>
+        <hierarchy-select select-options="adctrl.labelOpts" select-result="adctrl.hierarchies" y-name="adctrl.yName" s-method="adctrl.smethod" without-blank="adctrl.noBlank">         
+        </hierarchy-select>
+        <label>Chart Size</label>
+        <div class="form-group">
+        <input ng-model="chartScale" type="range" name="points" step=0.1 min="1" max="2"></input>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-success " ng-click="adctrl.addChart()">
+              Comfirm
+          </button>
+          <button class="btn btn-danger " ng-click="adctrl.cleanChart()">
+              Clean Chart
+          </button>
+        </div>
+        <label>Legend Setting</label>    
+        <div class="form-group">
+            <button type="button" class="btn btn-info" ng-click="adctrl.addLegend()">Add Legend</button>
+            <button type="button" class="btn btn-warning" ng-click="adctrl.deleteLegend()">Delete Legend</button>
+        </div>
+        <label>Legend Size</label>
+        <div class="form-group">
+        <input ng-model="legendScale" type="range" name="points" step=0.1 min="1" max="2"></input>
+        </div> 
+        <label>Label Size</label>
+        <div class="form-group">
+        <input ng-model="labelScale" type="range" name="points" step=0.1 min="1" max="2"></input>
+        </div> 
+  </div>
+
+  
+  
+ 
+   
+   
+ 
+  </div>
+
+</div>
